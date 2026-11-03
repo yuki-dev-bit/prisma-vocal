@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: typecheck + testes (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    env:
+      # typecheck e testes não usam o binário do Electron: evita baixar ~120 MB
+      ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [22, 24]
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck (renderer + core + electron)
+        run: npm run typecheck
+
+      - name: Lint (ESLint + regras de hooks)
+        run: npm run lint
+
+      - name: Formatação (Prettier)
+        run: npm run format:check
+
+      - name: Testes de núcleo com cobertura
+        run: npm run test:coverage
+
+      - name: Compila o processo principal (esbuild, sem o binário do Electron)
+        run: npm run build:electron
+
+      - name: Smoke dos scripts (dev + CSP de desenvolvimento)
+        run: npm run smoke
+
+  build:
+    name: build do renderer e do processo principal
+    runs-on: ubuntu-latest
+    env:
+      ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      # Regressão importante: se o AudioWorklet voltar a ser embutido como
+      # `data:` URL, a CSP (`script-src 'self'`) bloqueia o áudio em produção.
+      - name: Garante que o worklet é um asset próprio
+        run: |
+          test -f dist/assets/capture-processor-*.js
+          ! grep -q "data:text/javascript" dist/assets/*.js
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: renderer-build
+          path: dist
+          retention-days: 7

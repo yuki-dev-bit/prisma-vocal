@@ -1,0 +1,83 @@
+{
+  "name": "prisma-vocal",
+  "productName": "Prisma Vocal",
+  "version": "1.0.1",
+  "description": "Treinamento, análise e acompanhamento de voz para feminização e masculinização vocal — app de mesa offline, local e privado (Windows, Linux e macOS).",
+  "author": {
+    "name": "yuki-dev-bit",
+    "email": "yuki-dev-bit@users.noreply.github.com",
+    "url": "https://github.com/yuki-dev-bit"
+  },
+  "homepage": "https://github.com/yuki-dev-bit/prisma-vocal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yuki-dev-bit/prisma-vocal.git"
+  },
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "dist-electron/main.cjs",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "audio:test": "node scripts/make-test-audio.mjs",
+    "build": "npm run typecheck && npm run build:renderer && npm run build:electron",
+    "build:electron": "node scripts/build-electron.mjs",
+    "build:renderer": "vite build",
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "vite --host 0.0.0.0 --port 5273 --strictPort",
+    "dist": "npm run build && electron-builder",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:win": "npm run build && electron-builder --win",
+    "doctor": "node scripts/check-deps.mjs --strict",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"electron/**/*.ts\" \"tests/**/*.ts\" \"scripts/*.mjs\" \"*.{ts,json,js}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\" \"electron/**/*.ts\" \"tests/**/*.ts\" \"scripts/*.mjs\" \"*.{ts,json,js}\"",
+    "icons": "python3 scripts/generate_icons.py",
+    "lint": "eslint .",
+    "pack:dir": "npm run build && electron-builder --dir",
+    "perf:hud": "npm run build:renderer && node scripts/perf-hud.mjs --throttle 4 --seconds 8",
+    "postinstall": "node scripts/check-deps.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "smoke": "node --check scripts/dev.mjs && node --check scripts/check-deps.mjs && node --check scripts/smoke-dev.mjs && node --check scripts/make-test-audio.mjs && node --check scripts/screenshots.mjs && node scripts/dev.mjs --check && node scripts/smoke-dev.mjs",
+    "smoke:desktop": "node scripts/smoke-desktop.mjs",
+    "smoke:mic": "node scripts/smoke-mic.mjs",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.electron.json --noEmit",
+    "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test:coverage && npm run smoke",
+    "verify:desktop": "npm run build:renderer && npm run smoke:desktop"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.6.0",
+    "@capacitor/cli": "^8.6.0",
+    "@capacitor/core": "^8.6.0",
+    "@capacitor/filesystem": "^8.1.5",
+    "@capacitor/local-notifications": "^8.3.1",
+    "@capacitor/share": "^8.0.3",
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitest/coverage-v8": "^5.0.5",
+    "electron": "^45.1.0",
+    "electron-builder": "^26.18.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^15.15.0",
+    "playwright": "^1.64.1",
+    "prettier": "^3.9.10",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  }
+}

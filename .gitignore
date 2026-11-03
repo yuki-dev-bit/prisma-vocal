@@ -1,0 +1,46 @@
+# Dependências
+node_modules/
+
+# Build
+dist/
+dist-electron/
+release/
+*.tsbuildinfo
+
+# Nunca versionar dados de usuário
+*.enc
+*.key
+vault.key
+recordings/
+logs/
+*.log
+
+# Android: chaves de assinatura nunca entram no repositório
+*.jks
+*.keystore
+android/keystore.properties
+
+# Instaladores e pacotes prontos (ficam em Releases, não no código)
+*.apk
+*.aab
+*.exe
+*.msi
+*.dmg
+*.AppImage
+
+# Ferramentas
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Capturas geradas localmente por `npm run screenshots` em máquinas sem
+# Chromium: mantenha as do repositório, ignore artefatos temporários.
+docs/screenshots/.tmp/
+docs/screenshots/layout/
+
+# Áudio de teste gerado (o script cria este arquivo)
+assets/dev/*.wav
+!assets/dev/.gitkeep

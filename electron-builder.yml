@@ -1,0 +1,96 @@
+appId: br.dev.yukidev.prismavocal
+productName: Prisma Vocal
+copyright: Copyright © 2026 yuki-dev-bit
+
+directories:
+  output: release
+  buildResources: build
+
+# Só o necessário para executar: renderer compilado, processo principal
+# compilado, ícone e metadados. Fontes, testes e scripts ficam fora do pacote.
+files:
+  - dist/**/*
+  - dist-electron/**/*
+  - build/icon.png
+  - package.json
+  - '!**/*.map'
+  - '!**/*.md'
+
+asar: true
+compression: normal
+publish: null
+
+linux:
+  target:
+    - target: AppImage
+      arch: [x64, arm64]
+    - target: deb
+      arch: [x64, arm64]
+  category: AudioVideo
+  icon: build/icons
+  synopsis: Treino e análise de voz offline, local e privada
+  description: >-
+    Prisma Vocal é uma ferramenta local de treinamento, análise acústica e
+    acompanhamento de voz para feminização e masculinização vocal. Processa o
+    áudio no próprio dispositivo, com dados criptografados e sem telemetria.
+  desktop:
+    entry:
+      Name: Prisma Vocal
+      Comment: Treino e análise de voz — 100% offline
+      Categories: AudioVideo;Education;Utility;
+      Keywords: voz;voz;fala;fonoaudiologia;treino;trans;
+  mimeTypes: []
+
+deb:
+  depends:
+    - libasound2
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - xdg-utils
+    - libatspi2.0-0
+  recommends:
+    - libayatana-appindicator3-1
+
+win:
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+  icon: build/icon.ico
+  artifactName: ${productName}-${version}-win-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Prisma Vocal
+  deleteAppDataOnUninstall: false
+
+mac:
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+  icon: build/icon.icns
+  category: public.app-category.education
+  darkModeSupport: true
+  # Sem entitlements personalizados: o app não usa câmera, tela ou rede.
+  # O acesso ao microfone é concedido pelo usuário na primeira captura.
+  extendInfo:
+    NSMicrophoneUsageDescription: >-
+      O Prisma Vocal usa o microfone para analisar sua voz em tempo real. O áudio
+      é processado e armazenado apenas neste dispositivo.
+    LSMinimumSystemVersion: '11.0'
+    NSHumanReadableCopyright: Copyright © 2026 yuki-dev-bit
+
+dmg:
+  title: Prisma Vocal ${version}
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications

@@ -1,0 +1,17 @@
+# Normaliza fim de linha: o repositório usa LF e o Windows também vai usá-lo
+# no working tree, evitando diffs falsos e surpresas em scripts/CI.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.icns binary
+*.wav binary
+*.zip binary
+
+package-lock.json text eol=lf linguist-generated=true
+
+# Scripts de Windows precisam de CRLF: `gradlew.bat` e `.cmd` com LF podem falhar
+# em `cmd.exe` (o `goto`/`call` depende do fim de linha). Não normalize.
+*.bat text eol=crlf
+*.cmd text eol=crlf

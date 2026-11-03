@@ -1,0 +1,139 @@
+/*
+ * Prisma Vocal — design tokens.
+ *
+ * Identidade: base "tinta" quase preta com leve desvio azul; acentos vindos
+ * das cores da bandeira trans, usados como refração de luz (nunca como
+ * adesivo). Superfícies em camadas, bordas de 1px quase invisíveis e números
+ * tabulares para leituras de instrumento.
+ */
+
+:root {
+  /* ---- cores base ---- */
+  --ink-900: #070910;
+  --ink-850: #0a0d15;
+  --ink-800: #0d111b;
+  --ink-750: #111622;
+  --ink-700: #151b29;
+  --ink-650: #1a2131;
+  --ink-600: #222b3d;
+
+  --text-strong: #f2f5fb;
+  --text: #d9dfec;
+  --text-muted: #98a2b8;
+  --text-faint: #6b768d;
+
+  /* acentos (bandeira trans reinterpretada como refração) */
+  --blue: #5bcefa;
+  --blue-dim: #2f8fbd;
+  --pink: #f5a9b8;
+  --pink-dim: #b56b7d;
+  --mint: #8ee3c2;
+  --amber: #f0c67a;
+  --violet: #a99bf5;
+
+  --ok: #63d6a5;
+  --warn: #f0b45f;
+  --danger: #ff7b8a;
+
+  /* gradientes de marca */
+  --prism: linear-gradient(115deg, #5bcefa 0%, #a9d9ff 28%, #ffffff 50%, #ffd7e0 72%, #f5a9b8 100%);
+  --prism-soft: linear-gradient(115deg, rgba(91, 206, 250, 0.22), rgba(255, 255, 255, 0.06) 50%, rgba(245, 169, 184, 0.22));
+  --glow-blue: rgba(91, 206, 250, 0.28);
+  --glow-pink: rgba(245, 169, 184, 0.26);
+
+  /* ---- superfícies ---- */
+  --surface: rgba(16, 20, 29, 0.86);
+  --surface-raised: rgba(21, 27, 39, 0.92);
+  --surface-sunken: rgba(9, 12, 18, 0.72);
+  --border: rgba(255, 255, 255, 0.075);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+
+  /* ---- tipografia ---- */
+  --font-sans: 'Inter var', Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+  --font-scale: 1;
+
+  --fs-3xs: calc(10.5px * var(--font-scale));
+  --fs-2xs: calc(11.5px * var(--font-scale));
+  --fs-xs: calc(12.5px * var(--font-scale));
+  --fs-sm: calc(13.5px * var(--font-scale));
+  --fs-md: calc(15px * var(--font-scale));
+  --fs-lg: calc(17px * var(--font-scale));
+  --fs-xl: calc(21px * var(--font-scale));
+  --fs-2xl: calc(26px * var(--font-scale));
+  --fs-3xl: calc(34px * var(--font-scale));
+  --fs-display: calc(46px * var(--font-scale));
+
+  /* ---- espaçamento, raios, sombras ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 26px;
+  --sp-7: 34px;
+  --sp-8: 46px;
+
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 28px -14px rgba(0, 0, 0, 0.8), 0 2px 6px rgba(0, 0, 0, 0.32);
+  --shadow-lg: 0 30px 70px -30px rgba(0, 0, 0, 0.9), 0 8px 20px -10px rgba(0, 0, 0, 0.6);
+
+  --dur-fast: 120ms;
+  --dur: 190ms;
+  --dur-slow: 320ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  --sidebar-w: 248px;
+  --topbar-h: 62px;
+  --hud-radius: var(--r-lg);
+}
+
+/* Alto contraste */
+[data-contrast='high'] {
+  --text: #ffffff;
+  --text-muted: #d5dced;
+  --text-faint: #b4bdd0;
+  --border: rgba(255, 255, 255, 0.24);
+  --border-strong: rgba(255, 255, 255, 0.4);
+  --surface: rgba(6, 8, 13, 0.97);
+  --surface-raised: rgba(12, 16, 24, 0.98);
+  --surface-sunken: rgba(3, 4, 7, 0.95);
+  --ink-900: #000000;
+}
+
+/* Paleta segura para daltonismo: troca rosa/azul por violeta/âmbar discrimináveis */
+[data-cb='safe'] {
+  --blue: #7fb8ff;
+  --pink: #ffb35c;
+  --prism: linear-gradient(115deg, #7fb8ff 0%, #bfd8ff 30%, #ffffff 50%, #ffd9a8 72%, #ffb35c 100%);
+}
+
+/* Tema claro (opcional; o escuro é o padrão da marca) */
+[data-theme='claro'] {
+  --ink-900: #f4f6fb;
+  --ink-850: #eef1f8;
+  --ink-800: #e7ebf4;
+  --ink-750: #dee3ef;
+  --ink-700: #d3d9e8;
+  --ink-650: #c6cddf;
+  --ink-600: #b3bbd0;
+  --text-strong: #0c1019;
+  --text: #1a2130;
+  --text-muted: #4b5566;
+  --text-faint: #6c7686;
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-raised: rgba(255, 255, 255, 0.96);
+  --surface-sunken: rgba(240, 243, 250, 0.9);
+  --border: rgba(12, 16, 25, 0.1);
+  --border-strong: rgba(12, 16, 25, 0.2);
+  --inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --shadow-md: 0 12px 28px -18px rgba(20, 30, 60, 0.35), 0 2px 6px rgba(20, 30, 60, 0.08);
+}
